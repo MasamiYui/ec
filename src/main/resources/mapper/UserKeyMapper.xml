@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.springboot.mapper.UserKeyMapper">
+  <insert id="add" parameterType="tk.mybatis.springboot.model.UserKey">
+     INSERT INTO tb_user_key (`idcard_no`,`public_key`,`private_key`,`passwd`)
+	 VALUES (#{idcard_no},#{public_key},#{private_key},#{passwd})
+  </insert>
+
+  <select id="check" parameterType="java.lang.String" resultType="java.lang.Integer">
+     SELECT COUNT(*) FROM tb_user_key
+     WHERE `idcard_no` = #{idCardNo}
+  </select>
+  
+  <select id="selectDetailByIdCardNo" parameterType="java.lang.String" resultType="tk.mybatis.springboot.model.UserKey">
+  	SELECT * FROM tb_user_key
+  	WHERE `idcard_no` = #{idCard_no}
+  </select>
+
+  <select id="selectPrivateKeyByIdcardNoAndPassword" resultType="java.lang.String">
+  	SELECT tb_user_key.private_key
+	FROM tb_user_key
+	WHERE tb_user_key.idcard_no = #{0} AND tb_user_key.passwd=#{1}
+  </select>
+  
+</mapper>

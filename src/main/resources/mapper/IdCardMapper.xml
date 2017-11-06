@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tk.mybatis.springboot.mapper.IdCardMapper">
+  <insert id="add" parameterType="tk.mybatis.springboot.model.IdCard">
+     INSERT INTO tb_idcard (`id`, `name`, `sex`, `nation`, `date`, `address`, `idcard_no`, `txhash`, `time`, `url`,`state`)
+     VALUES(#{id},#{name},#{sex},#{nation},#{date},#{address},#{idcard_no},#{txhash},#{time},#{url},#{state})
+  </insert>
+  
+  <select id="check" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	 SELECT COUNT(*) FROM tb_idcard
+  	 WHERE idcard_no=#{idCardNo}
+  </select>
+  
+  <update id="updateState" parameterType="java.lang.String">
+  	UPDATE tb_idcard SET `state` = 1
+  	WHERE idcard_no = #{idCardNo}
+  </update>
+  
+  <select id="selectAllIdCard" resultType="java.util.HashMap">
+  	SELECT `id`, `name`, `sex`, `nation`, `date`, `address`, `idcard_no`, `txhash`, `time`, `state`
+  	FROM tb_idcard
+  </select>
+  
+  <select id="selectIdCardById" resultType="java.util.HashMap" parameterType="java.lang.Integer">
+  	SELECT `id`, `name`, `sex`, `nation`, `date`, `address`, `idcard_no`, `txhash`, `time`, `state`
+  	FROM tb_idcard 
+  	WHERE `id` = #{id}
+  </select>
+  
+  <select id="selectIdCardsByLikeIdCardNo" resultType="java.util.HashMap">
+  	SELECT `id`, `name`, `sex`, `nation`, `date`, `address`, `idcard_no`, `txhash`, `time`, `state`
+  	FROM tb_idcard
+  	WHERE `idcard_no` LIKE #{idCardNo}
+  </select>
+  
+    <select id="selectIdCardsByLikeName" resultType="java.util.HashMap">
+  	SELECT `id`, `name`, `sex`, `nation`, `date`, `address`, `idcard_no`, `txhash`, `time`, `state`
+  	FROM tb_idcard
+  	WHERE `name` LIKE #{name}
+  </select>
+  
+  <select id="selectIdCardByCardNo" resultType="java.util.HashMap">
+  	SELECT *
+  	FROM tb_idcard
+  	WHERE `idcard_no` = #{idCardNo}
+  </select>
+  
+  <select id="selectIdCardDetailByIdCardNo" resultType="java.util.Hashtable" parameterType="java.lang.String">
+  	SELECT *
+  	FROM tb_idcard
+  	WHERE idcard_no = #{idCardNo}
+  </select>
+  
+
+  
+</mapper>

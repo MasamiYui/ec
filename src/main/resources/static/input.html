@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>区块链身份证平台</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div id="inputdate">
+    <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" class="form-control" id="name" placeholder="请输入名称">
+
+        <label for="name">性别</label>
+        <input type="text" class="form-control" id="sex" placeholder="请输入名称">
+
+        <label for="name">民族</label>
+        <input type="text" class="form-control" id="nation" placeholder="请输入名称">
+
+        <label for="name">出生年月</label>
+        <input type="text" class="form-control" id="date" placeholder="请输入名称">
+
+        <label for="name">出生地址</label>
+        <input type="text" class="form-control" id="address" placeholder="请输入名称">
+
+        <label for="name">身份证号</label>
+        <input type="text" class="form-control" id="idCardNo" placeholder="请输入名称">
+
+        <label for="name">初始密码</label>
+        <input type="text" class="form-control" id="passwd" placeholder="请输入名称">
+        
+        <div id= "idCardUpload">  
+        <p>上传文件： <input type="file" id="file" name="file"/></p>
+        <input type="hidden" id="url" value="">
+        <img id="idcard_img" src=""/> 
+        <input type="button" value="上传" onclick="uploadIdCardImg()" />  
+</div>  
+
+    </div>
+
+    <button class="btn btn-default" onclick=submitIdCard()>提交</button>
+
+</div>
+</body>
+
+
+<script type="text/javascript ">
+    function submitIdCard(){
+        var name = $("#name").val();
+        var sex = $("#sex").val();
+        var nation = $("#nation").val();
+        var date = $("#date").val();
+        var address = $("#address").val();
+        var idCardNo = $("#idCardNo").val();
+        var passwd = $("#passwd").val();
+		var url =  $("#url").val();
+        //alert(name+sex+nation+data+address+idCardNo);
+        //ajax 提交
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/add",
+            data: {
+                "name":name,
+                "sex":sex,
+                "nation":nation,
+                "date":date,
+                "address":address,
+                "idCardNo":idCardNo,
+                "passwd":passwd,
+				"url":url
+            },
+            success: function (data) {
+                if(data.code == 200){
+                    //加载数据
+                    alert("添加成功");
+                    window.location.href = "http://localhost:9090/static/input.html";
+                }else {
+                    alert(data.msg)
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+
+    }
+
+function uploadIdCardImg() {
+	 var formData = new FormData();
+ 	 formData.append("file", document.getElementById("file").files[0]);
+     $.ajax({  
+          url: 'http://localhost:9090/file/uploadIdCardImg' ,  
+          type: "POST",
+          data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.code == 200) {
+                            alert("上传成功");
+							//修改
+							$("#idcard_img").attr('src',data.data.http_url); 
+							$("#url").val(data.data.http_url); 
+                        }else{
+							alert("上传失败");
+						}
+                    },
+                    error: function () {
+                        alert("err！");
+                    }
+     });  
+}   
+
+</script>
+</html>

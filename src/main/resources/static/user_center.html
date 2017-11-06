@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>区块链电子证件照平台-用户中心</title>
+    <style>
+        @font-face {
+            font-family: custom;       /*这里是说明调用来的字体名字*/
+            src: url('./css/first.TTF');   /*这里是字体文件路径*/
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+            background: #393F4F;
+        }
+
+        .box {
+            width: 100%;
+            height: auto !important;
+            min-height: 600px;
+            height: 600px;
+            background: #fff;
+            margin: auto;
+            padding-top: 46px;
+        / / 设置据顶部高度
+        }
+
+        .user {
+            background-color: #393F4F;
+            height: 110px;
+            padding-top: 10px;
+        }
+
+        /* WebKit browsers */
+
+        ::-webkit-input-placeholder {
+            color: white;
+        }
+
+        /* Mozilla Firefox 4 to 18 */
+
+        :-moz-placeholder {
+            color: white;
+            opacity: 1;
+        }
+
+        /* Mozilla Firefox 19+ */
+
+        ::-moz-placeholder {
+            color: white;
+            opacity: 1;
+        }
+
+        /* Internet Explorer 10+ */
+
+        :-ms-input-placeholder {
+            color: white;
+        }
+
+        .panel {
+            margin: 10px;
+            margin-top: 20px;
+        }
+
+        .box_163css {
+            width: 100%;
+            background-color: #393F4F;
+        }
+
+        .nav {
+            width: 100%;
+            float: left;
+            height: 34px;
+        }
+
+        .nav li {
+            font-size: 14px;
+            float: left;
+            width: 50%;
+            height: 34px;
+            -webkit-transition: all 0.35s linear;
+            cursor: pointer;
+            text-align: center;
+            line-height: 32px;
+            list-style-type: none;
+            color: white;
+        }
+
+        .nav li.on {
+            color: #4EB7CD;
+        }
+
+        .line {
+            width: 100%;
+            float: left;
+            position: relative;
+            left: 0;
+            top: 0px;
+            height: 2px;
+            background: #5A6378;
+        }
+
+        .s_line {
+            position: absolute;
+            display: block;
+            width: 50%;
+            z-index: 1;
+            top: -7px;
+            left: 0;
+            height: 7px;
+            border-bottom: 2px solid #4EB7CD;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .s_line b {
+            display: inline-block;
+            margin-top: -8px;
+            width: 0;
+            height: 0;
+            border-style: dashed dashed solid;
+            border-width: 10px;
+            border-color: transparent transparent #E4393C;
+            overflow: hidden;
+            zoom: 1;
+            font-size: 0;
+        }
+
+        .zlbox_content {
+            width: 100%;
+            margin: 0px auto;
+            margin-top: 20px;
+        }
+
+        .item_tab {
+            min-height: 100%;
+            border-top: 0px;
+            text-align: center;
+        }
+
+        .list_item {
+            border-bottom: 1px solid gray;
+        }
+
+        .loadbtn {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div class="header" style="position:fixed;left:0px;top:0px;width:100%;z-index: 5; height: 50px; background-color: #5A6378">
+        <table width="100% " height="50px" border="0" cellpadding="0 " cellspacing="0 ">
+            <tr>
+                <td width="40% " align="left " style="padding: 5px;">
+                    <img src="./img/back.png " width="15px " height="20px" style="margin-left: 10px;" onclick="back()"></img>
+                </td>
+                <td width="60% " align="right" style="padding-right: 10px; ">
+                    	区块链电子证件照平台-用户中心
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="user">
+        <table width="100% " border="0" cellpadding=" " cellspacing="0 ">
+            <tr>
+                <td width="30% " align="center" style="padding: 5px; color: #5DABB8;">欢迎用户:</img>
+                </td>
+                <td width="70% " align="left" style="padding-right: 10px; "><span
+                        style="color: #5DABB8; margin-left: 0px;" id="name"></span></td>
+            </tr>
+        </table>
+
+        <div class="box_163css">
+            <ul class="nav">
+                <li class="navs_li on">用户证件照</li>
+                <li class="navs_li">用户中心</li>
+            </ul>
+
+            <div class="line">
+	    	<span class="s_line">
+				<b></b>
+	    	</span>
+                <div style="clear: both;"></div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <div class="">
+
+    </div>
+
+
+    <div class="zlbox_content">
+        <!-- 证件中心-->
+        <div class="item_tab" style="display: block;">
+            <div class="list" id="cards_tab" style="margin-top: 40px">
+              
+
+            </div>
+        </div>
+
+        <!-- 用户中心 -->
+        <div class="item_tab" style="display: none;">
+            <div class="list" id="user_tab" style="margin-top: 20px">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript ">
+    $(document).ready(function() {
+		//加载用户的证件照列表（现暂时支持身份证与驾驶证）
+		getCards();
+    });
+
+	function getCards(){
+		//直接请求即可，服务端保存有session
+		 $.ajax({
+            type: 'POST',
+            url: "/user/cards/list",
+            data:{
+                
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                	dataStr = JSON.stringify(data.data);
+                    var rdata = JSON.parse(dataStr);
+					var userInfo = rdata.user_info;
+					var idCardInfo = rdata.idcard_info;
+					//添加名字信息
+					$("#name").html(userInfo.name);
+					//添加证件信息
+					var cardStr = "";
+					cardStr +=
+                            "<table width='100%' height='120px' border='0' cellspacing='0' class='list_item' onclick='idCardDetail(" + idCardInfo.id + ")'>" +
+                            "<tr>" +
+                            "<td colspan='2' width='100%' align='left' style='padding-left: 15px; color: #FF6B6B;font-family: custom'>" +"身份证" + "</img>" +
+                            "</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td width='70%'  align='left' style='padding-left: 15px;color: gray; '>" + "证件号:" + idCardInfo.idcard_no + "</img>" +
+                            "</td>" +
+                            "<tr>" +
+                            "<td width='70%'  align='left' style='padding-left: 15px;color: gray; '>" + "录入时间" +
+							idCardInfo.time + "</img>" +
+                            "</td>" +
+                            "</tr></table>";
+					 $("#cards_tab").html(cardStr);
+				}else{
+					alert("请求失败");
+				}
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert("数据请求错误");
+            }
+        });
+	}
+
+
+	function idCardDetail(id){
+		alert(id);	
+	}
+
+
+    function back() {
+        window.history.go(-1);
+    }
+
+  
+    var l = 0;
+    $('.navs_li').hover(function () {
+        $(this).siblings().removeClass('on');
+        $(this).addClass('on');
+        var i = $(this).index();
+        var width = document.body.clientWidth;
+        var a1 = width / 2 * i;
+        $(".s_line").animate({left: a1}, 200);
+        var index = $(".navs_li").index($(this));
+        $(".item_tab").hide();
+        $(".item_tab").eq(index).show();
+        console.log("i=" + i);
+        if (index == 0) {
+        } else if (index == 1) {
+            //userCenter();
+        }
+    });
+
+
+</script>
+</body>
+
+</html>

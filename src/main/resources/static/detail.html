@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>区块详细信息</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<table class="table">
+    <caption>区块信息</caption>
+    <thead>
+    <tr>
+        <th>/</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>区块号</td>
+        <td width="70%" id="blockNumber"></td>
+    <tr>
+    <tr>
+        <td>交易Hash</td>
+        <td width="70%" id="txHash"></td>
+    <tr>
+    <tr>
+        <td>Index</td>
+        <td width="70%" id="index"></td>
+    <tr>
+    <tr>
+        <td>原始录入信息</td>
+        <td width="70%" id="inputdata" ></td>
+    <tr>
+    <tr>
+        <td>参考网站</td>
+        <td width="70%" id="referenceWeb"></td>
+    </tbody>
+</table>
+
+</body>
+
+<script type="text/javascript ">
+
+    $(function() {
+     var url = location.search;
+     var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+        //ajax请求所有的已经添加的电子身份证的用户列表
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/blockdata",
+            data: {
+				"id":theRequest.id
+            },
+            success: function (data) {
+             if(data.code == 200){
+             	//加载数据
+             	idCardsBlockStr = JSON.stringify(data.data);
+ 				idCard = JSON.parse(idCardsBlockStr);             	
+             	$("#blockNumber").html(idCard.blockNumber);
+             	$("#txHash").html(idCard.txHash);
+             	$("#index").html(idCard.index);
+             	$("#inputdata").html(idCard.inputData);
+             	$("#referenceWeb").html(idCard.referenWeb);
+              }else {
+                    alert("数据返回错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+
+    });
+
+
+
+</script>
+</html>

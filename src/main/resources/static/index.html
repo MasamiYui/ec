@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>区块链身份证平台</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="table-responsive">
+
+	
+    <table class="table" id="idCardTable">
+        <h2 style="text-align: center">系统后台</h2>
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>身份证号码</th>
+            <th>性别</th>
+            <th>民族</th>
+            <th>出生年月</th>
+            <th>出生地址</th>
+            <th>状态</th>
+            <th>区块信息详情</th>
+        </tr>
+        </thead>
+        <tbody id="idCardsBody">
+        <tr>
+            <td>1</td>
+            <td>春花花</td>
+            <td>123456789</td>
+            <td>男</td>
+            <td>汉</td>
+            <td>1994-05-31</td>
+            <td>重庆市南岸区</td>
+            <td>尚未确认</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>夏草草</td>
+            <td>123456781</td>
+            <td>女</td>
+            <td>汉</td>
+            <td>1994-05-31</td>
+            <td>重庆市南岸区</td>
+            <td>已确认</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div style="text-align: center">
+    <ul class="pagination" id= "pageNum">
+        <li><a onclick="getIdcardByPage()">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+    </ul>
+</div>
+
+	<div class="form-group">
+		<label class="sr-only" for="name">姓名</label>
+		<input type="text" class="form-control" id="nameText" 
+			   placeholder="请输入姓名">
+		<button type="btn_name" class="btn btn-default" onclick = selectIdCardInfoByName(1)>通过用户名查找</button>
+	</div>
+
+	
+	<div class="form-group">
+		<label class="sr-only" for="idCardNo">身份证号</label>
+		<input type="text" class="form-control" id="idCardNoText" 
+			   placeholder="请输入身份证号">
+		<button type="btn_idCardNo" class="btn btn-default" onclick = selectIdCardInfoByIdCardNo(1)>通过身份证号查找</button>
+	</div>
+	
+	<div class="form-group">
+	<button type="button" class="btn btn-default btn-lg btn-block" onclick = gotoAddIdCardPage()>添加新的信息</button>
+	</div>
+
+
+
+</body>
+<script type="text/javascript ">
+
+    $(function() {
+        //ajax请求所有的已经添加的电子身份证的用户列表
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/list/1/10",
+            data: {
+
+            },
+            success: function (data) {
+                var idCardsStr = "";
+                if (data.code == 200) {
+                    idCardsStr = JSON.stringify(data.data.list);
+                    //alert(data.data.pages);
+                    //设置分页数
+                    var pageNumStr = "";
+                    for(k=0;k<data.data.pages;k++){
+                        pageNumStr = pageNumStr+
+                            "<li><a onclick =\""+"getIdcardsByPage("+(k+1)+")\">"+(k+1)+"</a></li>"
+                    }
+                    $("#pageNum").html(pageNumStr);
+                    //处理,设置表格
+                    idCards = JSON.parse(idCardsStr);
+                    for(i=0;i<data.data.list.length;i++){
+                        var stateStr = "";
+                        if(idCards[i]['state'] == 1){
+                            stateStr="已通过";
+                        }else{
+                            stateStr="未检查/"+"<a href=\"#\" onclick=checkState(\""+idCards[i]['idcard_no']+"\")"+">"+"检查"+"</a>";
+                        }
+                        idCardsStr = idCardsStr+
+                            "<tr>"+
+                            "<td>"+idCards[i]['id']+"</td>"+
+                            "<td>"+idCards[i]['name']+"</td>"+
+                            "<td>"+idCards[i]['idcard_no']+"</td>"+
+                            "<td>"+idCards[i]['sex']+"</td>"+
+                            "<td>"+idCards[i]['nation']+"</td>"+
+                            "<td>"+idCards[i]['date']+"</td>"+
+                            "<td>"+idCards[i]['address']+"</td>"+
+                            "<td>"+stateStr+"</td>"+
+                            "<td>"+"<a href='http://localhost:9090/static/detail.html?id="+idCards[i]['id']+"'>查看区块详情"+"</a> "+"</td>"+
+                            "</tr>";
+                    }
+                    $("#idCardsBody").html(idCardsStr);
+                }else {
+                    alert("数据返回错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+
+    });
+
+
+    //请求页
+    function getIdcardsByPage(page){
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/list/"+page+"/10",
+            data: {
+
+            },
+            success: function (data) {
+                var idCardsStr = "";
+                if (data.code == 200) {
+                    idCardsStr = JSON.stringify(data.data.list);
+                    idCards = JSON.parse(idCardsStr);
+                    for(i=0;i<data.data.list.length;i++){
+                        var stateStr = "";
+                        if(idCards[i]['state'] == 1){
+                            stateStr="已通过检查";
+                        }else{
+                            stateStr="未通过检查/"+"<a href=\"#\" onclick=checkState(\""+idCards[i]['idcard_no']+"\")"+">"+"检查"+"</a>";
+                        }
+                        idCardsStr = idCardsStr+
+                            "<tr>"+
+                            "<td>"+idCards[i]['id']+"</td>"+
+                            "<td>"+idCards[i]['name']+"</td>"+
+                            "<td>"+idCards[i]['idcard_no']+"</td>"+
+                            "<td>"+idCards[i]['sex']+"</td>"+
+                            "<td>"+idCards[i]['nation']+"</td>"+
+                            "<td>"+idCards[i]['date']+"</td>"+
+                            "<td>"+idCards[i]['address']+"</td>"+
+                            "<td>"+stateStr+"</td>"+
+                            "<td>"+"<a href='http://localhost:9090/static/detail.html?id="+idCards[i]['id']+"'>查看区块详情"+"</a> "+"</td>"+
+                            "</tr>";
+                    }
+                    $("#idCardsBody").html(idCardsStr);
+                }else {
+                    alert("数据返回错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+    }
+
+    //确认区块链上的情况
+    function checkState(idcardNo){
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/confirm",
+            data: {
+                "idCardNo":idcardNo
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                        if(data.data == 1){
+                            alert("经查询，信息已录入区块链");
+                            window.location.reload();
+                        }else{
+                            alert("失败");
+                        }
+                }else {
+                    alert("数据返回错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+    }
+    
+    //跳转到添加用户信息界面
+    function gotoAddIdCardPage(){
+    	window.location.href = "http://localhost:9090/static/input.html";
+    }
+    
+    function selectIdCardInfoByIdCardNo(page){
+    	var selectIdCardNo = $("#idCardNoText").val();
+    	 $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/get/byidcardno",
+            data: {
+				"idCardNo":selectIdCardNo,
+				"page":page
+            },
+            success: function (data) {
+                var idCardsStr = "";
+                if (data.code == 200) {
+                	 //设置分页数
+                    var pageNumStr = "";
+                    for(k=0;k<data.data.pages;k++){
+                        pageNumStr = pageNumStr+
+                            "<li><a onclick =\""+"getIdcardsByPage("+(k+1)+")\">"+(k+1)+"</a></li>"
+                    }
+                    $("#pageNum").html(pageNumStr);
+                    idCardsStr = JSON.stringify(data.data.list);
+                    idCards = JSON.parse(idCardsStr);
+                    for(i=0;i<data.data.list.length;i++){
+                        var stateStr = "";
+                        if(idCards[i]['state'] == 1){
+                            stateStr="已通过检查";
+                        }else{
+                            stateStr="未通过检查/"+"<a href=\"#\" onclick=checkState(\""+idCards[i]['idcard_no']+"\")"+">"+"检查"+"</a>";
+                        }
+                        idCardsStr = idCardsStr+
+                            "<tr>"+
+                            "<td>"+idCards[i]['id']+"</td>"+
+                            "<td>"+idCards[i]['name']+"</td>"+
+                            "<td>"+idCards[i]['idcard_no']+"</td>"+
+                            "<td>"+idCards[i]['sex']+"</td>"+
+                            "<td>"+idCards[i]['nation']+"</td>"+
+                            "<td>"+idCards[i]['date']+"</td>"+
+                            "<td>"+idCards[i]['address']+"</td>"+
+                            "<td>"+stateStr+"</td>"+
+                            "<td>"+"<a href='http://localhost:9090/static/detail.html?id="+idCards[i]['id']+"'>查看区块详情"+"</a> "+"</td>"+
+                            "</tr>";
+                    }
+                    $("#idCardsBody").html(idCardsStr);
+                }else {
+                    alert("数据返回错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });	
+    }
+    
+    function selectIdCardInfoByName(page){
+    	var selectName = $("#nameText").val();
+    	 $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/idcard/get/byname",
+            data: {
+				"name":selectName,
+				"page":page
+            },
+            success: function (data) {
+                var idCardsStr = "";
+                if (data.code == 200) {
+                	 //设置分页数
+                    var pageNumStr = "";
+                    for(k=0;k<data.data.pages;k++){
+                        pageNumStr = pageNumStr+
+                            "<li><a onclick =\""+"getIdcardsByPage("+(k+1)+")\">"+(k+1)+"</a></li>"
+                    }
+                    $("#pageNum").html(pageNumStr);
+                    idCardsStr = JSON.stringify(data.data.list);
+                    idCards = JSON.parse(idCardsStr);
+                    for(i=0;i<data.data.list.length;i++){
+                        var stateStr = "";
+                        if(idCards[i]['state'] == 1){
+                            stateStr="已通过检查";
+                        }else{
+                            stateStr="未通过检查/"+"<a href=\"#\" onclick=checkState(\""+idCards[i]['idcard_no']+"\")"+">"+"检查"+"</a>";
+                        }
+                        idCardsStr = idCardsStr+
+                            "<tr>"+
+                            "<td>"+idCards[i]['id']+"</td>"+
+                            "<td>"+idCards[i]['name']+"</td>"+
+                            "<td>"+idCards[i]['idcard_no']+"</td>"+
+                            "<td>"+idCards[i]['sex']+"</td>"+
+                            "<td>"+idCards[i]['nation']+"</td>"+
+                            "<td>"+idCards[i]['date']+"</td>"+
+                            "<td>"+idCards[i]['address']+"</td>"+
+                            "<td>"+stateStr+"</td>"+
+                            "<td>"+"<a href='http://localhost:9090/static/detail.html?id="+idCards[i]['id']+"'>查看区块详情"+"</a> "+"</td>"+
+                            "</tr>";
+                    }
+                    $("#idCardsBody").html(idCardsStr);
+                }else {
+                    alert("数据返回错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });	
+    }
+    
+    
+
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 实例 - 响应式表格</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="table-responsive">
+    <table class="table">
+        <caption style="text-align: center">身份证列表</caption>
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>身份证号码</th>
+            <th>性别</th>
+            <th>民族</th>
+            <th>出生年月</th>
+            <th>出生地址</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>春花花</td>
+            <td>123456789</td>
+            <td>男</td>
+            <td>汉</td>
+            <td>1994-05-31</td>
+            <td>重庆市南岸区</td>
+            <td>尚未确认</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>夏草草</td>
+            <td>123456781</td>
+            <td>女</td>
+            <td>汉</td>
+            <td>1994-05-31</td>
+            <td>重庆市南岸区</td>
+            <td>已确认</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div style="text-align: center">
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+<script type="text/javascript ">
+    $(function() {
+        //alert("加载完成");
+        //ajax请求所有的已经添加的电子身份证的用户列表
+        $.ajax({
+            type: 'POST',
+            url: "/idcard/list/1/10",
+            data: {
+
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    alert(data.data);
+                    alert("成功")
+                }else {
+                    alert("数据加载错误");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+
+    });
+</script>
+</html>

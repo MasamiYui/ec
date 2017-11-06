@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>区块链身份证平台</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div id="inputdate">
+    <div class="form-group">
+        <label for="name">真实姓名</label>
+        <input type="text" class="form-control" id="name" placeholder="请输入名称">
+		
+		<label for="name">手机号码</label>
+        <input type="text" class="form-control" id="phone" placeholder="请输入名称">
+		
+        <label for="name">身份证号</label>
+        <input type="text" class="form-control" id="idCardNo" placeholder="请输入名称">
+
+        <label for="name">密码</label>
+        <input type="text" class="form-control" id="passwd" placeholder="请输入名称">
+	</div>  
+    <button class="btn btn-default" onclick=registerUser()>提交</button>
+</div>
+</body>
+
+
+<script type="text/javascript ">
+    function registerUser(){
+        var name = $("#name").val();
+        var phone = $("#phone").val();
+		var idCardNo = $("#idCardNo").val();
+        var passwd = $("#passwd").val();
+        //ajax 提交
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:9090/user/add",
+            data: {
+                "name":name,
+                "phone":phone,
+                "idCardNo":idCardNo,
+                "passwd":passwd,
+            },
+            success: function (data) {
+                if(data.code == 200){
+                    //加载数据
+                    alert("添加成功");
+                    window.location.href = "http://localhost:9090/static/user_register.html";
+                }else {
+                    alert(data.msg)
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("数据请求错误");
+            }
+        });
+
+    }
+
+
+
+</script>
+</html>

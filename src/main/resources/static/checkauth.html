@@ -162,6 +162,10 @@
         </table>
     </div>
 
+    <div class="text" style="text-align: center;margin-top: 50px" >
+        ​<img id="idcard_img" src="">
+    </div>
+
 	<div class="text" style="text-align: center;margin-top: 50px" id="qrcode"></div>
 	    ​
 	</div>
@@ -191,6 +195,7 @@
                         $("#nation").val(idCard.nation);
                         $("#date").val(idCard.date);
                         $("#address").val(idCard.address);
+                        $("#idcard_img").attr('src',idCard.url); 
                     } else {
                         alert("认证错误");
                     }

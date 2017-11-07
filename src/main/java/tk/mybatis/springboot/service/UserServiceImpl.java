@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jnr.ffi.Struct.in_addr_t;
+import tk.mybatis.springboot.mapper.UserKeyMapper;
 import tk.mybatis.springboot.mapper.UserMapper;
 import tk.mybatis.springboot.model.User;
 
@@ -14,6 +14,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserMapper userDao;
+	
+	@Autowired
+	private UserKeyMapper userKeyDao;
 	
 	@Override
 	public int addUser(String name, String phone, String idCardNo, String passwd) {
@@ -39,6 +42,14 @@ public class UserServiceImpl implements UserService{
 	public Hashtable<String, Object> checkLogin(String phone, String passwd) {
 		Hashtable<String, Object> result = userDao.checkLogin(phone, passwd);
 		return result;
+	}
+
+	@Override
+	public int checkIdCard(String idCardNo, String passwd) {
+		if(userKeyDao.selectPasswdByIdCardNo(idCardNo).equals(passwd)) {
+			return 1;//密码正确
+		}
+		return 0;//密码错误
 	}
 
 }

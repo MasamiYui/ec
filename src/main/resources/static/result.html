@@ -162,6 +162,10 @@
         </table>
     </div>
 
+    <div class="text" style="text-align: center;margin-top: 50px" >
+        ​<img id="idcard_img" src="">
+    </div>
+
 	<div class="text" style="text-align: center;margin-top: 50px" id="qrcode"></div>
 	    ​
 	</div>
@@ -195,6 +199,8 @@
                    $("#address").val(idCard.address);
                    //alert("http://localhost:9090/static/checkauth.html?checkid="+idCard.uuid);
                    $('#qrcode').qrcode("http://localhost:9090/static/checkauth.html?checkid="+idCard.uuid);
+                   $("#idcard_img").attr('src',idCard.url); 
+
                 }else{
                     alert("认证错误");
                 }

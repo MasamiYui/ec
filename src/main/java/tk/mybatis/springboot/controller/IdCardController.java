@@ -215,7 +215,7 @@ public class IdCardController {
 			dataMap.put("uuid", uuid);
 			String authStr = objectMapper.writeValueAsString(dataMap);
 			JedisUtil.add(uuid, authStr, DefaultTime);//添加到jedis，设置10min过期
-			session.setAttribute("auth", authStr);//设置session
+			session.setAttribute("idCardAuth", authStr);//设置session
 			return new CommonResult(200, "ok", dataMap);
 		}else{
 			return new CommonResult(301, "验证失败", null);			
@@ -227,7 +227,7 @@ public class IdCardController {
 	public CommonResult authResult(
 			HttpSession session
 			) throws Exception{
-		String authStr = (String) session.getAttribute("auth");
+		String authStr = (String) session.getAttribute("idCardAuth");
 		if(authStr=="" || authStr.equals(null)){
 			return new CommonResult(301, "验证失败", null);
 		}else{

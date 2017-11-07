@@ -221,6 +221,51 @@
 </div>
 
 
+
+<!-- model -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="idCardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    请输入完整的身份证信息与资产密码
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!-- 在此显示框内内容 -->
+                <div class="text" style="margin-top: 50px">
+                    <table width="100% " height="100px" border="0" cellpadding="0 " cellspacing="0 ">
+                        <tr>
+                            <td colspan="3" width="90%" align="center">
+                                <label class="col-sm-2 control-label">身份证号</label>
+                                <input type="text" class="idcard_no" id="idcardmodal_idcard_no" placeholder="15/18位完整身份证">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" width="90% " align="center">
+                                <label class="col-sm-2 control-label">资产密码</label>
+                                <input type="password" class="pwd" id="idcardmodal_passwd" placeholder="资产密码">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="btn_idcard_submit" onclick="submit_idcard()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <script type="text/javascript ">
     $(document).ready(function() {
 		//加载用户的证件照列表（现暂时支持身份证与驾驶证）
@@ -246,7 +291,7 @@
 					//添加证件信息
 					var cardStr = "";
 					cardStr +=
-                            "<table width='100%' height='120px' border='0' cellspacing='0' class='list_item' onclick='idCardDetail(" + idCardInfo.id + ")'>" +
+                            "<table width='100%' height='120px' border='0' cellspacing='0' class='list_item' data-toggle='modal' data-target='#idCardModal'>" +
                             "<tr>" +
                             "<td colspan='2' width='100%' align='left' style='padding-left: 15px; color: #FF6B6B;font-family: custom'>" +"身份证" + "</img>" +
                             "</td>" +
@@ -271,8 +316,30 @@
 	}
 
 
-	function idCardDetail(id){
-		alert(id);	
+	function submit_idcard(){
+        var idcardNo = $("#idcardmodal_idcard_no").val();
+        var passwd = $("#idcardmodal_passwd").val();
+        //ajax提交
+
+        $.ajax({
+            type: 'POST',
+            url: "/user/cards/idcard/check",
+            data:{
+                "idCardNo" : idcardNo,
+                "passwd" : passwd,
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    //如果请求成功，页面进行跳转
+                    window.location.href = "http://localhost:9090/static/result.html";
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("数据请求错误");
+            }
+        });
 	}
 
 

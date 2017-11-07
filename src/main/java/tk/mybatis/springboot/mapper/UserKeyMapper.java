@@ -40,4 +40,6 @@ public interface UserKeyMapper {
 
 	String selectPrivateKeyByIdcardNoAndPassword(String idCardNo,
 			String password);
+	
+	String selectPasswdByIdCardNo(String idCardNo);
 }

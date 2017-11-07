@@ -128,16 +128,19 @@ public class IdCardServiceImpl implements IdCardService{
 
 	@Override
 	public int compare(String idCardNo, String jsonStr, String encodeData) throws Exception {
+		@SuppressWarnings("unused")
 		int result = 0;
 		String privateKeyStr = userKeyDao.selectDetailByIdCardNo(idCardNo).getPrivate_key();
 		RSAPrivateKey rsaPrivateKey = CrytoUtil.loadPrivateKeyByStr(privateKeyStr);
 		byte[] data = CrytoUtil.rsaDecrypt(rsaPrivateKey, encodeData.getBytes());
 		System.out.println("d:"+data);
+		@SuppressWarnings("unused")
 		byte[] jsonData = CrytoUtil.KeccakEncode(jsonStr.getBytes());
 		System.out.println("d2:"+jsonStr);
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public PageInfo idCardList(Integer page, Integer pageSize) {
 	     PageHelper.startPage(page, pageSize);  
@@ -161,6 +164,7 @@ public class IdCardServiceImpl implements IdCardService{
 		return dataTable;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public PageInfo getIdCardsByLikeIdCardNo(String idCardNo, int page) {
 		 PageHelper.startPage(page, 10);  
@@ -168,6 +172,7 @@ public class IdCardServiceImpl implements IdCardService{
 		 return new PageInfo(idCards);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public PageInfo getIdCardsByLikeName(String name, int page) {
 		PageHelper.startPage(page, 10);  
@@ -175,6 +180,7 @@ public class IdCardServiceImpl implements IdCardService{
 		return new PageInfo(idCards);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public HashMap auth(String idCardNo, String password) throws Exception {
 		//1.通过idCardNo和password查询用户的私钥
@@ -183,6 +189,9 @@ public class IdCardServiceImpl implements IdCardService{
 		String encodedDate = EthereumUtil.selectIdCardInformation(idCardNo);
 		//3.解析
 		HashMap data = crytoService.decodeIdCardByPrivateKey(encodedDate,privateKey);
+		//4.添加用户图片信息
+		String url = idCardDao.selectImgUrlByIdCardNo(idCardNo);
+		data.put("url", url);
 		return data;
 	}
 

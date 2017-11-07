@@ -52,7 +52,11 @@
   	FROM tb_idcard
   	WHERE idcard_no = #{idCardNo}
   </select>
-  
 
-  
+  <select id="selectImgUrlByIdCardNo" resultType="java.lang.String" parameterType="java.lang.String">
+  	SELECT url
+  	FROM tb_idcard
+  	WHERE idcard_no = #{idCardNo}
+  </select>
+
 </mapper>

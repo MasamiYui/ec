@@ -24,4 +24,12 @@
 	WHERE tb_user_key.idcard_no = #{0} AND tb_user_key.passwd=#{1}
   </select>
   
+  <select id="selectPasswdByIdCardNo" resultType="java.lang.String" parameterType="java.lang.String">
+  	SELECT passwd
+  	FROM tb_user_key
+  	WHERE tb_user_key.idcard_no = #{idcardNo}
+  </select>
+  
+  
+  
 </mapper>

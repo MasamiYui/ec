@@ -55,6 +55,8 @@ public interface IdCardMapper {
 	HashMap selectIdCardByCardNo(String idCardNo);
 
 	Hashtable<String, Object> selectIdCardDetailByIdCardNo(String idCardNo);
+
+	String selectImgUrlByIdCardNo(String idCardNo);
 	
 	
 }

@@ -8,4 +8,6 @@ public interface UserService {
 	public int checkUser(String phone, String idCardNo);
 
 	public Hashtable<String, Object> checkLogin(String phone, String passwd);
+	
+	public int checkIdCard(String idCardNo, String passwd);
 }

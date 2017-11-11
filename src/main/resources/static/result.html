@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
@@ -24,7 +25,7 @@
             height: 100%;
             background: #5A6378;
             margin: auto;
-            padding-top: 46px;
+            padding-top: 0px;
         }
 
         .user {
@@ -112,15 +113,28 @@
             background-color: white;
             BACKGROUND-REPEAT: no-repeat;
             border: 0;
+            border-radius: 5px;
         }
 
+        h2{
+            color: white;
+            font-family: cursive;
+            text-align: center;
+            font-size: 23px;
+        }
+        input.user {
+            background:white url("./img/user.png") no-repeat 99% 55%;
+        }
+        input.mess {
+            background:white url("./img/mess.png") no-repeat 99% 55%;
+        }
 
     </style>
 </head>
 
 <body>
 <div class="box">
-    <div class="header" style="position:fixed;left:0px;top:0px;width:100%;z-index: 5; height: 40px;">
+   <!-- <div class="header" style="position:fixed;left:0px;top:0px;width:100%;z-index: 5; height: 40px;">
         <table width="100% " height="50px" border="0" cellpadding="0 " cellspacing="0 ">
             <tr>
                 <td width="40%" align="left">
@@ -130,43 +144,76 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </div>-->
 
     <div class="text" style="margin-top: 50px">
+        
         <table width="100% " height="100px" border="0" cellpadding="0 " cellspacing="0 ">
             <tr>
                 <td colspan="3" width="90%" align="center">
-                    <input type="text" readonly="readonly" class="common" id="name" placeholder="姓名">
+                    <h2>身份证信息验证中心</h2>
                 </td>
             </tr>
             <tr>
                 <td colspan="3" width="90%" align="center">
-                    <input type="text" readonly="readonly" class="common" id="idCardNo" placeholder="身份证号码">
+                    <input type="text" readonly="readonly" class="common user" id="name" placeholder="姓名">
                 </td>
             </tr>
             <tr>
                 <td colspan="3" width="90%" align="center">
-                    <input type="text" readonly="readonly" class="common" id="nation" placeholder="民族">
+                    <input type="text" readonly="readonly" class="common mess" id="idCardNo" placeholder="身份证号码">
                 </td>
             </tr>
             <tr>
                 <td colspan="3" width="90%" align="center">
-                    <input type="text" readonly="readonly" class="common" id="date" placeholder="出生日期">
+                    <input type="text" readonly="readonly" class="common mess" id="nation" placeholder="民族">
                 </td>
             </tr>
             <tr>
                 <td colspan="3" width="90%" align="center">
-                    <input type="text" readonly="readonly" class="common" id="address" placeholder="出生地址">
+                    <input type="text" readonly="readonly" class="common mess" id="date" placeholder="出生日期">
                 </td>
+            </tr>
+            <tr>
+                <td colspan="3" width="90%" align="center">
+                    <input type="text" readonly="readonly" class="common mess" id="address" placeholder="出生地址">
+                </td>
+            </tr>
+            <tr style="height:15px;"><td></td></tr>
+            <tr>
+                <td  align="center" ><a style="font-size:16px;color:white;" data-toggle="modal" data-target="#myModal">身份证图片</a></td>
+                <td align="center" ><a style="font-size:16px;color:white;" data-toggle="modal" data-target="#myQR">我的二维码</a></td>
             </tr>
         </table>
     </div>
 
-    <div class="text" style="text-align: center;margin-top: 50px" >
+    <!--<div class="text" style="text-align: center;margin-top: 50px" >
         ​<img id="idcard_img" src="">
-    </div>
+    </div>-->
 
-	<div class="text" style="text-align: center;margin-top: 50px" id="qrcode"></div>
+<!--	<div class="text" style="text-align: center;margin-top: 50px" id="qrcode"></div>-->
+    
+    <!--二维码图片-->
+    <div class="modal fade" id="myQR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-body">
+            <div class="text" style="text-align: center;margin-top: 50px" id="qrcode"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+        </div>
+    </div>
+    
+    <!--身份证图片-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-body">
+            <img id="idcard_img" src="">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+        </div>
+    </div>
+    
+    
 	    ​
 	</div>
 

@@ -23,7 +23,7 @@
             height: 100%;
             background: #5A6378;
             margin: auto;
-            padding-top: 46px;
+            padding-top: 20px;
         }
 
         .user {
@@ -97,32 +97,39 @@
 
         .btn-success {
             background-color: #4EB7CD;
-            width: 26%;
+            width: 85%;
             height: 60px;
             margin-left: 0px;
+            border-radius: 5px;
         }
 
         .phone {
             color: black;
             height: 60px;
-            width: 26%;
+            width: 85%;
             margin-top: 40px;
             padding-left: 40px;
             background-color: white;
             BACKGROUND-IMAGE: url(./img/img_login_person.png);
             BACKGROUND-REPEAT: no-repeat;
             border: 0;
+            -webkit-border-radius:;
+            -moz-border-radius:;
+            border-radius:5px;
         }
 
         .pwd {
             color: black;
             height: 60px;
-            width: 26%;
+            width: 85%;
             margin-top: 30px;
             padding-left: 40px;
             BACKGROUND-IMAGE: url(img/img_login_lock.png);
             BACKGROUND-REPEAT: no-repeat;
             border: 0;
+            -webkit-border-radius:;
+            -moz-border-radius:;
+            border-radius:5px;
         }
 
     </style>
@@ -130,8 +137,8 @@
 
 <body>
 <div class="box" >
-    <div style="padding-top: 100px;">
-    <div class="header" style="position:fixed;left:0px;top:100px;width:100%;z-index: 5; height: 40px;">
+    <div style="padding-top: 0px;">
+<!--    <div class="header" style="position:fixed;left:0px;top:100px;width:100%;z-index: 5; height: 40px;">
         <table width="100% " height="50px" border="0" cellpadding="0 " cellspacing="0 ">
             <tr>
                 <td width="40%" align="left">
@@ -141,11 +148,16 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </div>-->
 
 
     <div class="text" style="margin-top: 30px">
         <table width="100% " height="100px" border="0" cellpadding="0 " cellspacing="0 ">
+            <tr>
+                <td colspan="3" width="90%" align="center">
+                    <h2 style="font-family: cursive; color: wheat;font-size: 40px;">电子证件照平台</h2>
+                </td>
+            </tr>
             <tr>
                 <td colspan="3" width="90%" align="center">
                     <input type="text" class="phone" id="phone" placeholder="手机号码">

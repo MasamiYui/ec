@@ -3,14 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>区块链身份证平台</title>
+    
+    
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/styleinput.css">
+    
 </head>
 <body>
 
 <div id="inputdate">
-    <div class="form-group">
+    <!--<div class="form-group">
         <label for="name">姓名</label>
         <input type="text" class="form-control" id="name" placeholder="请输入名称">
 
@@ -32,17 +36,44 @@
         <label for="name">初始密码</label>
         <input type="text" class="form-control" id="passwd" placeholder="请输入名称">
         
-        <div id= "idCardUpload">  
-        <p>上传文件： <input type="file" id="file" name="file"/></p>
-        <input type="hidden" id="url" value="">
-        <img id="idcard_img" src=""/> 
-        <input type="button" value="上传" onclick="uploadIdCardImg()" />  
-</div>  
+        <div id= "idCardUpload">
+            <p>上传文件： <input type="file" id="file" name="file"/></p>
+            <input type="hidden" id="url" value="">
+            <img id="idcard_img" src=""/>
+            <input type="button" value="上传" onclick="uploadIdCardImg()" />
+        </div>
 
+    </div>-->
+    
+    <div class="form-group">
+        <div class="main-section">
+            <div class="login-form">
+                <h2>新增用户信息</h2>
+                <span></span>
+                <form>
+                    <input type="text" class="form-control user" id="name" placeholder="姓名">
+                    <input type="text" class="form-control mess" id="sex" placeholder="性别">
+                    <input type="text" class="form-control mess" id="nation" placeholder="民族">
+                
+                    <input type="text" class="form-control mess" id="date" placeholder="出生年月">
+                    <input type="text" class="form-control mess" id="address" placeholder="出生地址">
+                    <input type="text" class="form-control mess" id="idCardNo" placeholder="身份证号">
+                    <input type="text" class="form-control mess" id="passwd" placeholder="初始密码">
+                    <div id= "idCardUpload">
+                        <input type="file" id="file" name="file"/>
+                        <input type="hidden" id="url" value="">
+                        <img id="idcard_img" src=""/>
+                        <div style="text-align: left;">
+                            <input type="button" value="上传" onclick="uploadIdCardImg()" />
+                        </div>
+                    </div>
+                    <div style="height: 10px;"></div>
+                    <input type="submit" class="btn btn-default" onclick="submitIdCard()" value="提交">
+                </form>
+            </div>
+        </div>
     </div>
-
-    <button class="btn btn-default" onclick=submitIdCard()>提交</button>
-
+    
 </div>
 </body>
 
@@ -76,7 +107,7 @@
                 if(data.code == 200){
                     //加载数据
                     alert("添加成功");
-                    window.location.href = "http://localhost:9090/static/input.html";
+                   // window.location.href = "http://localhost:9090/static/input.html";
                 }else {
                     alert(data.msg)
                 }

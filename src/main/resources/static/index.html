@@ -4,16 +4,81 @@
     <meta charset="utf-8">
     <title>区块链身份证平台</title>
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/tabledemo.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<style>
+		.form-group{
+			text-align: right;
+			padding-right: 30px;
+		}
+		#idCardNoText,#nameText{
+			border-radius: 5px;
+			width: 230px;
+			height:32px;
+			border: 1px solid black;
+			margin-left: 20px;
+		}
+		.form-group>button{
+			width: 130px;
+			height:32px;
+			background-color: #84b9e2;
+			color: white;
+			border:0px;
+		}
+		hr{
+			height:4px;
+			width:97%;
+			border:none;
+			border-top:4px solid #2D87CC;
+		}
+		buttton{
+			color:white;
+		}
+		.table-responsive{
+			padding: 0px 30px;
+		}
+		
+		
+		
+	</style>
 </head>
 <body>
 
 <div class="table-responsive">
-
+	<h2 style="text-align: center;font-family: cursive;">电子证件照系统后台</h2>
+	<hr  />
 	
-    <table class="table" id="idCardTable">
-        <h2 style="text-align: center">系统后台</h2>
+	<!--<div class="form-group">
+		<label class="sr-only" for="idCardNo">身份证号
+		<input type="text" class="form-control" id="idCardNoText"
+		       placeholder="请输入身份证号">
+		</label>
+		<button type="btn_idCardNo" class="btn btn-default" onclick = selectIdCardInfoByIdCardNo(1)>身份证号查找</button>
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="name">姓名</label>
+		<input type="text" class="form-control" id="nameText"
+		       placeholder="请输入姓名">
+		</label>
+		<button type="btn_name" class="btn btn-default" onclick = selectIdCardInfoByName(1)>用户名查找</button>
+	</div>
+	<div class="form-group">
+		<button type="button" class="btn btn-default btn-lg btn-block" onclick = gotoAddIdCardPage()>新增</button>
+	</div>-->
+	
+	
+	<div class="form-group">
+		<input type="text"   id="idCardNoText"   placeholder="请输入身份证号">
+		<button type="btn_idCardNo" class="btn btn-default" onclick = selectIdCardInfoByIdCardNo(1)>身份证号查找</button>
+	
+		<input type="text"  id="nameText"  placeholder="请输入姓名">
+		<button type="btn_name" class="btn btn-default" onclick = selectIdCardInfoByName(1)>用户名查找</button>
+		<button type="button" class="btn btn-default" onclick = gotoAddIdCardPage()>新增</button>
+	</div>
+	
+    <table class="table  zebra" id="idCardTable">
         <thead>
         <tr>
             <th>编号</th>
@@ -60,27 +125,6 @@
         <li><a href="#">5</a></li>
     </ul>
 </div>
-
-	<div class="form-group">
-		<label class="sr-only" for="name">姓名</label>
-		<input type="text" class="form-control" id="nameText" 
-			   placeholder="请输入姓名">
-		<button type="btn_name" class="btn btn-default" onclick = selectIdCardInfoByName(1)>通过用户名查找</button>
-	</div>
-
-	
-	<div class="form-group">
-		<label class="sr-only" for="idCardNo">身份证号</label>
-		<input type="text" class="form-control" id="idCardNoText" 
-			   placeholder="请输入身份证号">
-		<button type="btn_idCardNo" class="btn btn-default" onclick = selectIdCardInfoByIdCardNo(1)>通过身份证号查找</button>
-	</div>
-	
-	<div class="form-group">
-	<button type="button" class="btn btn-default btn-lg btn-block" onclick = gotoAddIdCardPage()>添加新的信息</button>
-	</div>
-
-
 
 </body>
 <script type="text/javascript ">
@@ -211,8 +255,13 @@
     }
     
     //跳转到添加用户信息界面
+    var index_addqy;
     function gotoAddIdCardPage(){
     	window.location.href = "http://localhost:9090/static/input.html";
+    }
+
+    function doAfterAddSuccess() {
+        layer.close(index_addqy);
     }
     
     function selectIdCardInfoByIdCardNo(page){
